@@ -22,9 +22,9 @@ In short just run the neuralset.py before running echo-l1.
 
 Your contributions push the boundaries of whats possible and it's greatly appreciated.
 <br>
-<a href="https://github.com/1T57H3F0X/echo-l1/graphs/contributors">
+<a href="https://github.com/FoxIDK/echo-l1/graphs/contributors">
 <p align="center">
-  <img src="https://contrib.rocks/image?repo=1T57H3F0X/echo-l1" />
+  <img src="https://contrib.rocks/image?repo=FoxIDK/echo-l1" />
   </p>
 </a>
 
