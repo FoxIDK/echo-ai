@@ -13,6 +13,8 @@ Echo-l1 comes pre-baked with generic responses and code to kickstart your journe
 ## ✨ Features
 
 Before you ask questions, do consult the Wiki first as it goes into detail about what 'ANI' is, training the AI, etc and not reading the documentation and diving into AI can be very confusing for some, so it's worth reading up on first!
+
+In short just run the neuralset.py before running echo-l1. 
 - echo-l1.py | Echo-l1 itself.
 - training.py | Used to train Echo-l1 on new intense.json data.
 
