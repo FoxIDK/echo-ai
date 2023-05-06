@@ -64,9 +64,7 @@ def speak(audio):
     # Initializes the pyttsx3 engine.
     engine = pyttsx3.init()
     # Gets properties of the engine.
-    volume = engine.getProperty('volume')
     voices = engine.getProperty('voices')
-    rate = engine.getProperty('rate')
     # Sets properties of the engine.
     engine.setProperty('voice', voices[1].id) # Set the voice to the second voice (in the list of voices).
     engine.setProperty('volume', 10) # Set the volume to 10.
