@@ -1,13 +1,14 @@
-import speech_recognition as sr # Recognizing speech from audio input.
-import pyttsx3 # Text-to-speech conversion.
-import random # Replacing with URandom, to generate random responses from the list of possible responses.
-import json # Used for handling JSON data.
-import pickle # Used in serializing and deserializing Python objects.
-import numpy as np # Used for working with arrays and mathematical operations.
-import nltk # Used for natural/neural language processing tasks like tokenization, stemming, lemmatization, and POS tagging.
-import psutil #  used for getting system information like CPU utilization, memory usage, and disk usage. This is how the AI finds its 'wellness_value'.
-from keras.models import load_model # Used to load a trained model from the training program.
-from nltk.stem import WordNetLemmatizer # Used in lemmatization.
+# Imports.
+import speech_recognition as sr
+import pyttsx3
+import random
+import json
+import pickle
+import numpy as np
+import nltk
+import psutil
+from keras.models import load_model
+from nltk.stem import WordNetLemmatizer
 import threading
 
 # Instantiate WordNetLemmatizer for lemmatization.
@@ -105,7 +106,7 @@ def killswitch():
     speak("Please hold, I'm shutting down.")
     exit()
 
-# Tidy up.
+# Variables.
 ai_name = "Echo-l1"
 ai_name_rep = "Echo-l1: "
 
