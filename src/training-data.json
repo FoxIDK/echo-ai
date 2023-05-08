@@ -350,24 +350,5 @@
                     "The first successful 3D-printed organ was a bladder, printed in 1999."
                 ]
             }
-            ,
-            {
-                "tag": "example",
-                "patterns": [
-                    "example"
-                ],
-                "responses": [
-                    "example"
-                ]
-            },
-            {
-                "tag": "example2",
-                "patterns": [
-                    "example2"
-                ],
-                "responses": [
-                    "example2"
-                ]
-            }
         ]
     }

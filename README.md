@@ -2,7 +2,7 @@
 
 ![Logo](https://media.discordapp.net/attachments/1053895661629751397/1078449255481610280/base_rebuilt_hq_profile_rounded.png?width=425&height=425)
 
-## 🚀 About Echo-AI | [![Codacy Badge](https://app.codacy.com/project/badge/Grade/cad9f0c2bd7e4f8f8911b90ff6856592)](https://app.codacy.com/gh/FoxIDK/Echo-AI/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+## 🚀 About Echo-AI | [![Codacy Badge](https://app.codacy.com/project/badge/Grade/cad9f0c2bd7e4f8f8911b90ff6856592)](https://app.codacy.com/gh/FoxIDK/echo-ai/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 Echo-AI is the initial light-model variant of 'Echo-o1'. Using natural language processing (_NLP_) techniques and the Keras library to train a deep learning model to recognize user input and generate appropriate responses with threading and neural networks, it's an easily configurable, data-in-JSON, loaded ANI program.
 

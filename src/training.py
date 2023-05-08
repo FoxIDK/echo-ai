@@ -9,7 +9,6 @@ from keras.models import Sequential
 from nltk.stem import WordNetLemmatizer
 from keras.layers import Dense, Activation, Dropout
 from keras.optimizers import SGD
-import re
 
 # Compile and clean the training data.
 os.system("rm ./training-data.json")
