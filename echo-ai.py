@@ -14,12 +14,12 @@ import threading
 # Instantiate WordNetLemmatizer for lemmatization.
 lemmatizer = WordNetLemmatizer()
 # Load intents from the training data file.
-intents = json.loads(open("intense.json").read())
+intents = json.loads(open("src/training-data.json").read())
 # Load preprocessed words and classes from pickle files.
-words = pickle.load(open('words.pkl', 'rb'))
-classes = pickle.load(open('classes.pkl', 'rb'))
+words = pickle.load(open('src/words.pkl', 'rb'))
+classes = pickle.load(open('src/classes.pkl', 'rb'))
 # Load the trained model from disk.
-model = load_model('echo-l1.h5')
+model = load_model('src/echo.h5')
 
 # Tokenize the words in the sentence and lemmatize them.
 def clean_up_sentences(sentence):
@@ -107,8 +107,8 @@ def killswitch():
     exit()
 
 # Variables.
-ai_name = "Echo-l1"
-ai_name_rep = "Echo-l1: "
+ai_name = "Echo"
+ai_name_rep = "Echo: "
 
 # Taking a vocal command.
 def takeCommand():
@@ -153,7 +153,7 @@ def AI():
                 #message = takeCommand() # Uncomment if you wish to speak to wake it.
 
                 # Precoded commands.
-                if "killswitch" in message or "kill switch" in message:
+                if "killswitch" in message or "kill switch" in message or "exit" in message:
                     killswitch()
                 elif "you feeling" in message or "how do you feel" in message or "how are you feeling" in message:
                     get_wellness()

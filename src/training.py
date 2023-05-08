@@ -1,4 +1,5 @@
 # Imports.
+import os
 import random
 import json
 import pickle
@@ -8,12 +9,52 @@ from keras.models import Sequential
 from nltk.stem import WordNetLemmatizer
 from keras.layers import Dense, Activation, Dropout
 from keras.optimizers import SGD
+import re
 
+# Compile and clean the training data.
+os.system("rm ./training-data.json")
+directory = "intenses_db/"
+data = []
+for filename in os.listdir(directory):
+    if filename.endswith(".json"):
+        # Open the file and load the JSON data
+        with open(directory + filename, "r") as f:
+            file_data = json.load(f)
+        # Append the data to the list
+        data.append(file_data)
+with open(directory + "training-data.json", "w") as f:
+    json.dump(data, f, indent=4)
+os.system("mv ./intenses_db/training-data.json training-data.txt")
 
+with open('training-data.txt', 'r') as f:
+    file_contents = f.close()
+
+# Modify the file.
+with open('training-data.txt', 'r') as file:
+    data = file.read()
+
+# Replace the target.
+data = data.replace('        ]\n    },\n    {\n        "intents": [', '            ,')
+
+with open('training-data.txt', 'w') as file:
+    file.write(data)
+
+# Trims excess.
+with open("training-data.txt", "r") as f:
+    lines = f.readlines()
+
+# Remove last line.
+lines = lines[1:-1]
+
+# Convert to json.
+with open("training-data.txt", "w") as f:
+    f.writelines(lines)
+os.system("mv ./training-data.txt ./training-data.json")
+
+# Reading the training-data.json file
 lemmatizer = WordNetLemmatizer()
-
 # Reading the json.intense file
-intents = json.loads(open("intense.json").read())
+intents = json.loads(open("training-data.json").read())
 
 # Creating empty lists to store data
 words = []
@@ -81,7 +122,7 @@ hist = model.fit(np.array(train_x), np.array(train_y),
 				epochs=850, batch_size=5, verbose=1)
 
 # Saving the model
-model.save("echo-l1.h5", hist)
+model.save("echo.h5", hist)
 
 # Print statement to show the
 # Successful training of the Chatbot model

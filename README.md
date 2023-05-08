@@ -1,30 +1,30 @@
-# Project | Echo-l1
+# Project | Echo-AI
 
 ![Logo](https://media.discordapp.net/attachments/1053895661629751397/1078449255481610280/base_rebuilt_hq_profile_rounded.png?width=425&height=425)
 
-## 🚀 About Echo-l1 | [![Codacy Badge](https://app.codacy.com/project/badge/Grade/cad9f0c2bd7e4f8f8911b90ff6856592)](https://app.codacy.com/gh/FoxIDK/echo-l1/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+## 🚀 About Echo-AI | [![Codacy Badge](https://app.codacy.com/project/badge/Grade/cad9f0c2bd7e4f8f8911b90ff6856592)](https://app.codacy.com/gh/FoxIDK/Echo-AI/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
-Echo-l1 is the initial light-model variant of 'Echo-o1'. Using natural language processing (_NLP_) techniques and the Keras library to train a deep learning model to recognize user input and generate appropriate responses with threading and neural networks, it's an easily configurable, data-in-JSON, loaded ANI program.
+Echo-AI is the initial light-model variant of 'Echo-o1'. Using natural language processing (_NLP_) techniques and the Keras library to train a deep learning model to recognize user input and generate appropriate responses with threading and neural networks, it's an easily configurable, data-in-JSON, loaded ANI program.
 
 The AI is capable of recognizing user input via voice, _or text_, and generating appropriate responses using the trained model and a list of possible responses, it can be hard-coded to check for 'messages' in the voice _or text_ input to give a precoded response or carry out a specific task such as checking for a wellness_value.
 
-Echo-l1 comes pre-baked with generic responses and code to kickstart your journey into AI, it's even pre-trained!
+Echo-AI comes pre-baked with generic responses and code to kickstart your journey into AI, it's even pre-trained!
 
 ## ✨ Features
 
 Before you ask questions, do consult the Wiki first as it goes into detail about what 'ANI' is, training the AI, etc and not reading the documentation and diving into AI can be very confusing for some, so it's worth reading up on first!
 
-In short just run the neuralset.py before running echo-l1. 
-- echo-l1.py | Echo-l1 itself.
-- training.py | Used to train Echo-l1 on new intense.json data.
+In short just run the neuralset.py before running Echo-AI. 
+- echo-ai.py | Echo-AI itself.
+- training.py | Used to train Echo-AI.
 
 ## 🕸 Contributors
 
 Your contributions push the boundaries of whats possible and it's greatly appreciated.
 <br>
-<a href="https://github.com/FoxIDK/echo-l1/graphs/contributors">
+<a href="https://github.com/FoxIDK/Echo-AI/graphs/contributors">
 <p align="center">
-  <img src="https://contrib.rocks/image?repo=FoxIDK/echo-l1" />
+  <img src="https://contrib.rocks/image?repo=FoxIDK/Echo-AI" />
   </p>
 </a>
 
