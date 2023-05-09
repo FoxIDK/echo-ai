@@ -102,9 +102,8 @@ def get_wellness():
         responses = ["I'm not feeling so great today.", "I could be better.", "I'm struggling a bit today."]
     # Choose a response at random from the possible responses.
     response = random.choice(responses)
-    print(response)
-    print("\nWellness value:",int(wellness_value))
-    speak(response)
+    print(response); speak(response)
+    #print("\nWellness value:",int(wellness_value))
 
 # Kills on kill request.
 def killswitch():
@@ -142,8 +141,7 @@ def takeCommand():
 def AI():
     os.system("clear")
     # Run forever, until cancelled.
-    print("Ready to assist.")
-    speak("Ready to assist.")
+    print("Ready to assist."); speak("Ready to assist.")
     while True:
         try:
             message = "Echo" # If uncommented, it'll always respond without a wake word!
@@ -168,8 +166,7 @@ def AI():
                     # Checks intents / responses.
                     ints = predict_class(message)
                     res = get_response(ints, intents)
-                    print("Echo:", res)
-                    speak(res)
+                    print("Echo:", res); speak(res)
         except KeyboardInterrupt:
             # If the user interrupts the program.
             print("\nINTERRUPTED")

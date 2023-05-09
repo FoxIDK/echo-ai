@@ -4,11 +4,11 @@
 
 ## 🚀 About Echo-AI | [![Codacy Badge](https://app.codacy.com/project/badge/Grade/cad9f0c2bd7e4f8f8911b90ff6856592)](https://app.codacy.com/gh/FoxIDK/echo-ai/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
-Echo-AI is the initial light-model variant of 'Echo-o1'. Using natural language processing (_NLP_) techniques and the Keras library to train a deep learning model to recognize user input and generate appropriate responses with threading and neural networks, it's an easily configurable, data-in-JSON, loaded ANI program.
+Echo-AI is an AI assistant developed using natural language processing (NLP) techniques and the Keras library. It recognizes user input via voice or text, and generates appropriate responses using a deep learning model. The program is easily configurable and loaded with data in JSON format.
 
-The AI is capable of recognizing user input via voice, _or text_, and generating appropriate responses using the trained model and a list of possible responses, it can be hard-coded to check for 'messages' in the voice _or text_ input to give a precoded response or carry out a specific task such as checking for a wellness_value.
+In addition to recognizing and responding to user input, Echo-AI can be hard-coded to perform specific tasks such as checking for a wellness value or responding to pre-defined messages. This means that it can be used in conjunction with smart automated programming to maintain the host system on behalf of the operator.
 
-Echo-AI comes pre-baked with generic responses and code to kickstart your journey into AI, it's even pre-trained!
+Echo-AI comes with pre-built generic responses and code to help kickstart your journey into AI. It is also pre-trained, making it easy to get started with minimal effort.
 
 ## ✨ Features
 
