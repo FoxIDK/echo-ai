@@ -1,4 +1,5 @@
 # Imports.
+import os
 import speech_recognition as sr
 import pyttsx3
 import random
@@ -10,6 +11,10 @@ import psutil
 from keras.models import load_model
 from nltk.stem import WordNetLemmatizer
 import threading
+
+# NLTK installer.
+nltk.download('punkt')
+nltk.download('wordnet')
 
 # Instantiate WordNetLemmatizer for lemmatization.
 lemmatizer = WordNetLemmatizer()
@@ -135,6 +140,7 @@ def takeCommand():
     return message
 
 def AI():
+    os.system("clear")
     # Run forever, until cancelled.
     print("Ready to assist.")
     speak("Ready to assist.")
