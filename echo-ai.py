@@ -12,10 +12,27 @@ from keras.models import load_model
 from nltk.stem import WordNetLemmatizer
 import threading
 
-# NLTK installer.
+## Configuration!
+# Fix variables (avoid alterting these).
+male = 1
+female = 0
+
+# Dynamic variables (you can altert these).
+ai_name = "Echo"
+ai_name_rep = f"{ai_name}:" # Changing this changes text representative print out.
+ai_gender = male
+
+ai_volume = 100
+ai_speed = 165
+
+operator_name = "operator" # This is your name.
+operator_nicks_list = ['op','oppy'] # These your nicknames.
+operator_nicks = random.choice(operator_nicks_list)
+
+## Neural segment -- This is where the AI magic happens.
+# Downloads any updates.
 nltk.download('punkt')
 nltk.download('wordnet')
-
 # Instantiate WordNetLemmatizer for lemmatization.
 lemmatizer = WordNetLemmatizer()
 # Load intents from the training data file.
@@ -65,6 +82,7 @@ def get_response(intents_list, intents_json):
             break
     return result
 
+## Functions segment -- This is where the main functions are.
 # Function to play audible output using pyttsx3 library.
 def speak(audio):
     # Initializes the pyttsx3 engine.
@@ -72,14 +90,15 @@ def speak(audio):
     # Gets properties of the engine.
     voices = engine.getProperty('voices')
     # Sets properties of the engine.
-    engine.setProperty('voice', voices[1].id) # Set the voice to the second voice (in the list of voices).
-    engine.setProperty('volume', 10) # Set the volume to 10.
-    engine.setProperty('rate', 165) # Set the speaking rate to 165.
+    engine.setProperty('voice', voices[ai_gender].id) # Set the voice to the second voice (in the list of voices).
+    engine.setProperty('volume', ai_volume) # Set the volume to 10.
+    engine.setProperty('rate', ai_speed) # Set the speaking rate to 165.
     # Uses the engine to speak the input audio.
     engine.say(audio)
     engine.runAndWait()
 
-# Wellness module.
+## Modules segment -- This is where any modules you want to build should be.
+# Wellness.
 def get_wellness():
     # Get CPU usage percentage.
     cpu = psutil.cpu_percent()
@@ -91,29 +110,53 @@ def get_wellness():
     avg = (cpu + memory + disk) / 3
     # AI wellness value.
     wellness_value = avg
+
     # AI is well.
     if wellness_value < 30:
-        responses = ["I'm feeling great today!", "Couldn't be better!", "I'm doing well, thank you."]
+        responses = ["I'm feeling great today!", 
+                    "Couldn't be better!", 
+                    "I'm doing well, thank you.", 
+                    "I feel like a million bucks today!", 
+                    "Life is good today!", 
+                    "I'm on top of the world!",
+                    "I'm feeling fantastic today!", 
+                    "I'm in a really good mood today.", 
+                    "Today is going to be a great day!", 
+                    "I'm feeling energized today."]
     # AI is neutral.
     elif wellness_value >= 30 and wellness_value < 70:
-        responses = ["I'm doing okay, thank you.", "I'm hanging in there.", "I'm feeling so-so today."]
+        responses = ["I'm doing okay, thank you.", 
+                    "I'm hanging in there.", 
+                    "I'm feeling so-so today.", 
+                    "I'm just taking it one day at a time.", 
+                    "I'm managing, thank you for asking.", 
+                    "I'm coping.", 
+                    "I'm feeling alright today.", 
+                    "I'm doing my best today.", 
+                    "I'm feeling content today.", 
+                    "I'm feeling balanced today."]
     # AI is unwell.
     else:
-        responses = ["I'm not feeling so great today.", "I could be better.", "I'm struggling a bit today."]
+        responses = ["I'm not feeling so great today.", 
+                    "I could be better.", 
+                    "I'm struggling a bit today.", 
+                    "Today is a bit tough for me.", 
+                    "I'm feeling a little down today.", 
+                    "I'm not feeling my best today.", 
+                    "I'm feeling overwhelmed today.", 
+                    "I'm not doing so well today.", 
+                    "I'm feeling stressed today.", 
+                    "I'm feeling anxious today."]
+
     # Choose a response at random from the possible responses.
     response = random.choice(responses)
-    print(response); speak(response)
-    #print("\nWellness value:",int(wellness_value))
+    print(f"{ai_name_rep} {response}"); speak(response)
 
 # Kills on kill request.
 def killswitch():
-    speak("Please hold, I'm shutting down.")
-    exit()
+    print(f"{ai_name_rep} Please hold, I'm shutting down."); speak("Please hold, I'm shutting down."); exit()
 
-# Variables.
-ai_name = "Echo"
-ai_name_rep = "Echo: "
-
+## Operational segment -- Responsible for actual operational functionality, such as taking commends, or talking!
 # Taking a vocal command.
 def takeCommand():
     # Initializes a recognizer instance
@@ -147,34 +190,39 @@ def AI():
             message = "Echo" # If uncommented, it'll always respond without a wake word!
             #message = takeCommand() # Uncomment if you wish to speak to wake it.
 
-            # Check if wake words have been spoken.
             if "Echo" in message or "Hey echo" in message: # Wake words.
 
-                # Message to the 'AI'.
                 print(f"\n{ai_name} is listening!")
 
                 message = input("Input: ") # If uncommented, it'll take an input sentence instead of voice!
                 #message = takeCommand() # Uncomment if you wish to speak to wake it.
 
                 # Precoded commands.
-                if "killswitch" in message or "kill switch" in message or "exit" in message:
+                if any(keyword in message for keyword in ["killswitch", "kill switch", "exit"]):
                     killswitch()
-                elif "you feeling" in message or "how do you feel" in message or "how are you feeling" in message:
+                elif any(keyword in message for keyword in ["how are you","you feeling", "how do you feel", "how are you feeling"]):
                     get_wellness()
-                # AI segment.
+                # Response segment.
                 else:
                     # Checks intents / responses.
                     ints = predict_class(message)
                     res = get_response(ints, intents)
-                    print("Echo:", res); speak(res)
+                    # Neural variables -- You can make your own neural variables by adding onto the list, and doing a replace check for a hard-coded variable!
+                    if any(neural_variable in res for neural_variable in ["operator_name","operator_nicks","ai_name"]):
+                        res = res.replace("operator_name", operator_name)
+                        res = res.replace("operator_nicks", operator_nicks)
+                        res = res.replace("ai_name", ai_name)
+
+                    # Respond appropriately.
+                    print(f"{ai_name_rep} {res}"); speak(res)
         except KeyboardInterrupt:
             # If the user interrupts the program.
-            print("\nINTERRUPTED")
-            exit()
+            print("\nINTERRUPTED"); exit()
 
 if __name__ == '__main__':
     AI()
 
+## Threading segment -- If you make a new def or module, you can thread it.
 # Create a thread for handling the AI.
 cleanup_thread = threading.Thread(target=clean_up_sentences)
 bag_thread = threading.Thread(target=bagw)
