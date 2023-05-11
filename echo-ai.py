@@ -1,33 +1,41 @@
 # Imports.
+import datetime
+import json
+import nltk
+import numpy as np
 import os
-import speech_recognition as sr
+import pickle
+import psutil
 import pyttsx3
 import random
-import json
-import pickle
-import numpy as np
-import nltk
-import psutil
+import speech_recognition as sr
+from datetime import date
 from keras.models import load_model
 from nltk.stem import WordNetLemmatizer
 import threading
 
 ## Configuration!
-# Fix variables (avoid alterting these).
-male = 1
-female = 0
+# Loading the configuration json.
+with open('./var/pipes/config.json') as config_file:
+    config = json.load(config_file)
 
-# Dynamic variables (you can altert these).
-ai_name = "Echo"
-ai_name_rep = f"{ai_name}:" # Changing this changes text representative print out.
-ai_gender = male
-
-ai_volume = 100
-ai_speed = 165
-
-operator_name = "operator" # This is your name.
-operator_nicks_list = ['op','oppy'] # These your nicknames.
+# Access the variables from the loaded configuration.
+ai_name = config['ai']['name']
+ai_name_rep = (f"{ai_name}:")
+ai_gender = config['gender'][config['ai']['gender']]
+ai_volume = config['ai']['volume']
+ai_speed = config['ai']['speed']
+operator_name = config['operator']['name']
+operator_nicks_list = config['operator']['nicks']
 operator_nicks = random.choice(operator_nicks_list)
+
+def ai_config():
+    os.system("python3 ./src/modules/config.py"); exit()
+
+## Logging -- You can ignore this, it's for making 'memories'.
+current_time = datetime.now().strftime("%H:%M:%S")
+log_file = open(f"./var/log/memories/{date.today()}.mem", "a")
+log_file.write(f">> SESSION START | {date.today()}-{current_time} <<\n")
 
 ## Neural segment -- This is where the AI magic happens.
 # Downloads any updates.
@@ -188,13 +196,11 @@ def AI():
     while True:
         try:
             message = "Echo" # If uncommented, it'll always respond without a wake word!
-            #message = takeCommand() # Uncomment if you wish to speak to wake it.
+            #message = takeCommand(); print(f"\n{ai_name} is listening!") # Uncomment if you wish to speak to wake it.
 
             if "Echo" in message or "Hey echo" in message: # Wake words.
 
-                print(f"\n{ai_name} is listening!")
-
-                message = input("Input: ") # If uncommented, it'll take an input sentence instead of voice!
+                message = input("\nInput: ") # If uncommented, it'll take an input sentence instead of voice!
                 #message = takeCommand() # Uncomment if you wish to speak to wake it.
 
                 # Precoded commands.
@@ -202,6 +208,9 @@ def AI():
                     killswitch()
                 elif any(keyword in message for keyword in ["how are you","you feeling", "how do you feel", "how are you feeling"]):
                     get_wellness()
+                elif any(keyword in message for keyword in ["I want to configure you", "neural config"]):
+                    ai_config()
+
                 # Response segment.
                 else:
                     # Checks intents / responses.
@@ -215,6 +224,12 @@ def AI():
 
                     # Respond appropriately.
                     print(f"{ai_name_rep} {res}"); speak(res)
+                    
+                    # Appends to mems.
+                    log_file.write(f"PATTERN  | {operator_name}: {message}\n")
+                    log_file.write(f"RESPONSE | {ai_name}: {res}\n")
+                    log_file.flush()
+
         except KeyboardInterrupt:
             # If the user interrupts the program.
             print("\nINTERRUPTED"); exit()
