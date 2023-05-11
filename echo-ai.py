@@ -33,9 +33,22 @@ def ai_config():
     os.system("python3 ./src/modules/config.py"); exit()
 
 ## Logging -- You can ignore this, it's for making 'memories'.
-current_time = datetime.now().strftime("%H:%M:%S")
+# Sets time and date.
+current_time = datetime.datetime.now().strftime("%H:%M:%S")
+current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+mem_gen = current_date + ".mem"
+mem_path = os.path.join("./var/log/memories/", mem_gen)
+# Generates 'memories' directory, then creates the dir and file before confirming.
+os.makedirs("./var/log/memories/", exist_ok=True)
+with open(mem_path, 'w') as file:
+    file.write(">> START OF MEMORY <<\n")
+if os.path.isfile(mem_path):
+    print(f"File '{mem_path}' created successfully.")
+else:
+    print(f"Failed to create the file '{mem_path}', one might already exist.")
+# Allows the reading and writing for 'memories'.
 log_file = open(f"./var/log/memories/{date.today()}.mem", "a")
-log_file.write(f">> SESSION START | {date.today()}-{current_time} <<\n")
+log_file.write(f">> SESSION | {date.today()}-{current_time}\n")
 
 ## Neural segment -- This is where the AI magic happens.
 # Downloads any updates.

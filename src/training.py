@@ -45,9 +45,10 @@ with open("training-data.txt", "r") as f:
 # Remove last line.
 lines = lines[1:-1]
 
-# Convert to json.
 with open("training-data.txt", "w") as f:
     f.writelines(lines)
+
+# Convert to json.
 os.system("mv ./training-data.txt ./training-data.json")
 
 # Reading the training-data.json file
