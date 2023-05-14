@@ -1,0 +1,4 @@
+*.pyc
+/src/tlog/*
+/var/log/*
+/src/training-data.json

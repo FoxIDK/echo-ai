@@ -9,12 +9,17 @@ import psutil
 import pyttsx3
 import random
 import speech_recognition as sr
+import sys
+import threading
 from datetime import date
 from keras.models import load_model
 from nltk.stem import WordNetLemmatizer
-import threading
 
-## Configuration!
+# Pre-run.
+os.system("clear")
+# Hide tracebacks - change to 1 for dev mode.
+sys.tracebacklimit = 0
+
 # Loading the configuration json.
 with open('./var/pipes/config.json') as config_file:
     config = json.load(config_file)
@@ -208,10 +213,10 @@ def AI():
     print("Ready to assist."); speak("Ready to assist.")
     while True:
         try:
-            message = "Echo" # If uncommented, it'll always respond without a wake word!
+            message = f"{ai_name}" # If uncommented, it'll always respond without a wake word!
             #message = takeCommand(); print(f"\n{ai_name} is listening!") # Uncomment if you wish to speak to wake it.
 
-            if "Echo" in message or "Hey echo" in message: # Wake words.
+            if f"{ai_name}" in message or f"Hey {ai_name}" in message: # Wake words.
 
                 message = input("\nInput: ") # If uncommented, it'll take an input sentence instead of voice!
                 #message = takeCommand() # Uncomment if you wish to speak to wake it.
@@ -221,7 +226,7 @@ def AI():
                     killswitch()
                 elif any(keyword in message for keyword in ["how are you","you feeling", "how do you feel", "how are you feeling"]):
                     get_wellness()
-                elif any(keyword in message for keyword in ["I want to configure you", "neural config"]):
+                elif any(keyword in message for keyword in ["I want to configure you", "neural config", "config"]):
                     ai_config()
 
                 # Response segment.
@@ -243,9 +248,16 @@ def AI():
                     log_file.write(f"RESPONSE | {ai_name}: {res}\n")
                     log_file.flush()
 
+        # Error handling.
         except KeyboardInterrupt:
-            # If the user interrupts the program.
-            print("\nINTERRUPTED"); exit()
+            print("\nInturrupted with keyboard, exiting."); exit()
+        except FileNotFoundError as e:
+            if str(e).endswitch("training-data.json"):
+                print("\n[!] The specific file 'training-data.json' is not found.")
+            else:
+                print("\n[!] File not found.")
+        except json.decoder.JSONDecodeError as e:
+            print("\n[!] Error decoding JSON or training data:", e)
 
 if __name__ == '__main__':
     AI()

@@ -34,22 +34,23 @@ If you need to reach out for support, you can join my Discord [*here*](https://d
 
 ## ⚖ License
 
-[Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)](http://creativecommons.org/licenses/by-sa/4.0/)
+[Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+Under the following conditions, and appendix:
 
 - You are free to:
 
-Share — copy and redistribute the material in any medium or format
+Share — copy and redistribute the material in any medium or format.
 
-Adapt — remix, transform, and build upon the material
-for any purpose, even commercially.
+Adapt — remix, transform, and build upon the material.
 
-This license is acceptable for Free Cultural Works.
-
-The licensor cannot revoke these freedoms as long as you follow the license terms.
+The licensor cannot revoke these freedoms as long as you follow the license terms including appendix.
 
 - Under the following terms:
 
-Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor [here](https://www.github.com/FoxIDK/) endorses you or your use.
+
+NonCommercial — You may not use the material for commercial purposes. If you intend to do so you must make sucessful contact with the origin licensor [here](https://www.github.com/FoxIDK/) for permissions.
 
 ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
 
@@ -65,4 +66,6 @@ No warranties are given. The license may not give you all of the permissions nec
 
 ## 🖋 Appendix
 
-If the licensor doesn't agree with your method of providing attribution, you must revise it within a reasonable period or risk potential legal action being taken against you.
+If the origin licensor [here](https://www.github.com/FoxIDK/) doesn't agree with your method of providing attribution, or feels you've infinged on the license you must revise it within a reasonable period or risk legal action being taken against you.
+
+All variations, forks, etc built off of this software and license must adhear to this license too unless otherwise specified by contacting the licensor for a unique license for your intended use.
