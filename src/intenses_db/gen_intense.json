@@ -125,7 +125,8 @@
 
     {
         "tag": "about",
-        "patterns": ["who are you",
+        "patterns": [
+        "who are you",
         "what can you do",
         "tell me about yourself"
         ],
@@ -137,7 +138,8 @@
 
     {
         "tag": "name",
-        "patterns": ["what's your name",
+        "patterns": [
+        "what's your name",
         "do you have a name"
         ],
         "responses": [

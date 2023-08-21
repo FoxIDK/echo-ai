@@ -11,13 +11,13 @@ import random
 import speech_recognition as sr
 import sys
 import threading
+import subprocess
 from datetime import date
 from keras.models import load_model
 from nltk.stem import WordNetLemmatizer
 
 # Pre-run.
-os.system("clear")
-# Hide tracebacks - change to 1 for dev mode.
+subprocess.run("clear")
 sys.tracebacklimit = 0
 
 # Loading the configuration json.
@@ -30,6 +30,7 @@ ai_name_rep = (f"{ai_name}:")
 ai_gender = config['gender'][config['ai']['gender']]
 ai_volume = config['ai']['volume']
 ai_speed = config['ai']['speed']
+ai_voice = config['ai']['voice']
 operator_name = config['operator']['name']
 operator_nicks_list = config['operator']['nicks']
 operator_nicks = random.choice(operator_nicks_list)
@@ -53,21 +54,17 @@ else:
     print(f"Failed to create the file '{mem_path}', one might already exist.")
 # Allows the reading and writing for 'memories'.
 log_file = open(f"./var/log/memories/{date.today()}.mem", "a")
-log_file.write(f">> SESSION | {date.today()}-{current_time}\n")
+log_file.write(f"SESSION | {date.today()}-{current_time}\n")
 
 ## Neural segment -- This is where the AI magic happens.
 # Downloads any updates.
 nltk.download('punkt')
 nltk.download('wordnet')
-# Instantiate WordNetLemmatizer for lemmatization.
 lemmatizer = WordNetLemmatizer()
-# Load intents from the training data file.
-intents = json.loads(open("src/training-data.json").read())
-# Load preprocessed words and classes from pickle files.
-words = pickle.load(open('src/words.pkl', 'rb'))
-classes = pickle.load(open('src/classes.pkl', 'rb'))
-# Load the trained model from disk.
-model = load_model('src/echo.h5')
+intents = json.loads(open("src/neural_data/training-data.json").read())
+words = pickle.load(open('src/neural_data/words.pkl', 'rb'))
+classes = pickle.load(open('src/neural_data/classes.pkl', 'rb'))
+model = load_model('src/neural_data/echo.h5')
 
 # Tokenize the words in the sentence and lemmatize them.
 def clean_up_sentences(sentence):
@@ -109,70 +106,82 @@ def get_response(intents_list, intents_json):
     return result
 
 ## Functions segment -- This is where the main functions are.
-# Function to play audible output using pyttsx3 library.
 def speak(audio):
-    # Initializes the pyttsx3 engine.
-    engine = pyttsx3.init()
-    # Gets properties of the engine.
-    voices = engine.getProperty('voices')
-    # Sets properties of the engine.
-    engine.setProperty('voice', voices[ai_gender].id) # Set the voice to the second voice (in the list of voices).
-    engine.setProperty('volume', ai_volume) # Set the volume to 10.
-    engine.setProperty('rate', ai_speed) # Set the speaking rate to 165.
-    # Uses the engine to speak the input audio.
-    engine.say(audio)
-    engine.runAndWait()
+    if ai_voice == 'enabled':
+        engine = pyttsx3.init()
+        voices = engine.getProperty('voices')
+        engine.setProperty('voice', voices[ai_gender].id)
+        engine.setProperty('volume', ai_volume)
+        engine.setProperty('rate', ai_speed)
+        engine.say(audio)
+        engine.runAndWait()
+    if ai_voice == 'disabled':
+        pass
 
 ## Modules segment -- This is where any modules you want to build should be.
+
 # Wellness.
 def get_wellness():
-    # Get CPU usage percentage.
     cpu = psutil.cpu_percent()
-    # Get virtual memory usage percentage.
     memory = psutil.virtual_memory()[2]
-    # Get disk usage percentage.
     disk = psutil.disk_usage('/').percent
-    # Calculate average usage percentage.
     avg = (cpu + memory + disk) / 3
-    # AI wellness value.
     wellness_value = avg
 
     # AI is well.
     if wellness_value < 30:
-        responses = ["I'm feeling great today!", 
-                    "Couldn't be better!", 
-                    "I'm doing well, thank you.", 
-                    "I feel like a million bucks today!", 
-                    "Life is good today!", 
-                    "I'm on top of the world!",
-                    "I'm feeling fantastic today!", 
-                    "I'm in a really good mood today.", 
-                    "Today is going to be a great day!", 
-                    "I'm feeling energized today."]
+        responses = [
+            "I'm feeling great today!", 
+            "Couldn't be better!", 
+            "I'm doing well, thank you.", 
+            "I feel like a million bucks today!", 
+            "Life is good today!", 
+            "I'm on top of the world!",
+            "I'm feeling fantastic today!", 
+            "I'm in a really good mood today.", 
+            "Today is going to be a great day!", 
+            "I'm feeling energized today!",
+            "I'm feeling awesome and unstoppable!",
+            "I'm positively radiant today.",
+            "I'm brimming with happiness and positivity!",
+            "I'm genuinely excited about today.",
+            "I'm enjoying every moment to the fullest!"]
     # AI is neutral.
     elif wellness_value >= 30 and wellness_value < 70:
-        responses = ["I'm doing okay, thank you.", 
-                    "I'm hanging in there.", 
-                    "I'm feeling so-so today.", 
-                    "I'm just taking it one day at a time.", 
-                    "I'm managing, thank you for asking.", 
-                    "I'm coping.", 
-                    "I'm feeling alright today.", 
-                    "I'm doing my best today.", 
-                    "I'm feeling content today.", 
-                    "I'm feeling balanced today."]
+        responses = [
+            "I'm doing okay, thank you.", 
+            "I'm hanging in there.", 
+            "I'm feeling so-so today.", 
+            "I'm just taking it one day at a time.", 
+            "I'm managing, thank you for asking.", 
+            "I'm coping.", 
+            "I'm feeling alright today.", 
+            "I'm doing my best today.", 
+            "I'm feeling content today.", 
+            "I'm feeling balanced today.",
+            "I'm maintaining a steady state of mind.",
+            "I'm embracing the ebb and flow of the day.",
+            "I'm staying composed and focused.",
+            "I'm finding a sense of equilibrium.",
+            "I'm navigating through with a steady pace."]
     # AI is unwell.
     else:
-        responses = ["I'm not feeling so great today.", 
-                    "I could be better.", 
-                    "I'm struggling a bit today.", 
-                    "Today is a bit tough for me.", 
-                    "I'm feeling a little down today.", 
-                    "I'm not feeling my best today.", 
-                    "I'm feeling overwhelmed today.", 
-                    "I'm not doing so well today.", 
-                    "I'm feeling stressed today.", 
-                    "I'm feeling anxious today."]
+        responses = [
+            "I'm not feeling so great today.", 
+            "I could be better.", 
+            "I'm struggling a bit today.", 
+            "Today is a bit tough for me.", 
+            "I'm feeling a little down today.", 
+            "I'm not feeling my best today.", 
+            "I'm feeling overwhelmed today.", 
+            "I'm not doing so well today.", 
+            "I'm feeling stressed today.", 
+            "I'm feeling anxious today.",
+            "I'm facing some challenges at the moment.",
+            "I'm going through a bit of a rough patch.",
+            "I'm dealing with a mix of emotions today.",
+            "I'm finding it hard to lift my spirits.",
+            "I'm in need of some self-care and comfort."]
 
     # Choose a response at random from the possible responses.
     response = random.choice(responses)
@@ -185,48 +194,37 @@ def killswitch():
 ## Operational segment -- Responsible for actual operational functionality, such as taking commends, or talking!
 # Taking a vocal command.
 def takeCommand():
-    # Initializes a recognizer instance
     r = sr.Recognizer()
-    # Configures the microphone as the source of audio input.
     with sr.Microphone() as source:
-        # Adjusts the recognizer to the ambient noise level.
         r.adjust_for_ambient_noise(source)
-        # Sets the pause threshold to 0.5 seconds of non-speaking audio before a phrase is considered complete.
         r.pause_threshold = 0.5
-        # Captures the audio input from the microphone.
         audio = r.listen(source)
         try:
-            # Attempts to recognize the speech in the captured audio using Google Speech Recognition API.
             message = r.recognize_google(audio, language='en-in')
-            # Prints the recognized speech message.
             print(f"{ai_name} heard:", message)
         except Exception as e:
-            # Prints the error message if there's any problem in recognizing speech.
             print(e)
             return "None"
-    # Returns the recognized speech message.
     return message
 
 def AI():
     os.system("clear")
     # Run forever, until cancelled.
-    print("Ready to assist."); speak("Ready to assist.")
     while True:
         try:
             message = f"{ai_name}" # If uncommented, it'll always respond without a wake word!
             #message = takeCommand(); print(f"\n{ai_name} is listening!") # Uncomment if you wish to speak to wake it.
 
             if f"{ai_name}" in message or f"Hey {ai_name}" in message: # Wake words.
-
                 message = input("\nInput: ") # If uncommented, it'll take an input sentence instead of voice!
                 #message = takeCommand() # Uncomment if you wish to speak to wake it.
 
                 # Precoded commands.
-                if any(keyword in message for keyword in ["killswitch", "kill switch", "exit"]):
+                if any(keyword in message for keyword in ["killswitch", "kill switch"]):
                     killswitch()
                 elif any(keyword in message for keyword in ["how are you","you feeling", "how do you feel", "how are you feeling"]):
                     get_wellness()
-                elif any(keyword in message for keyword in ["I want to configure you", "neural config", "config"]):
+                elif any(keyword in message for keyword in ["ohce config"]):
                     ai_config()
 
                 # Response segment.
@@ -258,6 +256,7 @@ def AI():
                 print("\n[!] File not found.")
         except json.decoder.JSONDecodeError as e:
             print("\n[!] Error decoding JSON or training data:", e)
+            sys.exit(1)
 
 if __name__ == '__main__':
     AI()

@@ -9,7 +9,8 @@ with open('./var/pipes/config.json') as config_file:
 
 # Prompt the user to enter new values for the configuration variables.
 config['ai']['name'] = input("Enter AI's name: ")
-config['ai']['gender'] = input("Enter gender option (male/female): ")
+config['ai']['gender'] = input("Enter gender option (male/female): ").lower()
+config['ai']['voice'] = input("Voice enabled/disabled: ").lower()
 config['operator']['name'] = input("Enter your name: ")
 print("(Setting nicknames can only be done by manually editing the config.json)\n")
 
